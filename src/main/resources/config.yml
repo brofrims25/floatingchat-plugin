@@ -10,13 +10,35 @@
 # ===================================================================
 
 # Aktif/nonaktifkan seluruh fitur floating chat.
-# Jika false, chat berjalan normal seperti biasa (tanpa teks melayang).
 enabled: true
 
-# Jika true, chat asli di kolom chat bawah (chat box) tetap ditampilkan
-# seperti biasa SELAIN muncul sebagai floating chat.
-# Jika false, chat hanya muncul melayang di dekat karakter, tidak masuk chat box.
-keep-normal-chat: true
+# ===================================================================
+# CARA MEMICU FLOATING CHAT
+# ===================================================================
+# Floating chat TIDAK dipicu oleh chat biasa. Chat biasa (ketik langsung
+# tanpa perintah) akan tetap masuk ke chat global seperti biasa, seperti
+# server vanilla, dan TIDAK ditampilkan sebagai teks melayang.
+#
+# Floating chat hanya muncul ketika pemain memakai perintah:
+#   /chat <pesan>   atau   /ch <pesan>
+# Pesan itu HANYA tampil sebagai teks melayang di dekat karakter pemain
+# (terlihat oleh pemain lain yang berada dekat dengannya), dan TIDAK
+# dikirim ke chat global sama sekali.
+#
+# ===================================================================
+# PEMANTAUAN OLEH ADMIN
+# ===================================================================
+admin-monitor:
+  # Jika true, setiap pesan /chat atau /ch akan ikut dikirim ke chat box
+  # SEMUA pemain yang punya izin "floatingchat.admin" (untuk pemantauan/moderasi),
+  # walau pemain itu sedang jauh dari si pengirim.
+  # Pemain BIASA (tanpa izin floatingchat.admin) tidak akan melihat pesan ini
+  # di chat box mereka sama sekali -- mereka hanya bisa melihatnya kalau
+  # berada dekat secara fisik dengan pengirim (lewat teks melayang).
+  enabled: true
+
+  # Format pesan yang dikirim ke admin. {player} = nama pengirim, {message} = isi pesan asli (belum disensor).
+  format: "&8[&cFloatingChat&8] &e{player}&f: {message}"
 
 # ===================================================================
 # POSISI TAMPILAN FLOATING CHAT
