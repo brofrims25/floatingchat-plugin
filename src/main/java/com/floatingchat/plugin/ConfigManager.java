@@ -18,7 +18,8 @@ public class ConfigManager {
     private final FloatingChatPlugin plugin;
 
     private boolean enabled;
-    private boolean keepNormalChat;
+    private boolean adminMonitorEnabled;
+    private String adminMonitorFormat;
 
     private Position position;
     private Side side;
@@ -53,7 +54,8 @@ public class ConfigManager {
         FileConfiguration cfg = plugin.getConfig();
 
         this.enabled = cfg.getBoolean("enabled", true);
-        this.keepNormalChat = cfg.getBoolean("keep-normal-chat", true);
+        this.adminMonitorEnabled = cfg.getBoolean("admin-monitor.enabled", true);
+        this.adminMonitorFormat = cfg.getString("admin-monitor.format", "&8[&cFloatingChat&8] &e{player}&f: {message}");
 
         this.position = parseEnum(Position.class, cfg.getString("display.position", "ABOVE_HEAD"), Position.ABOVE_HEAD);
         this.side = parseEnum(Side.class, cfg.getString("display.side", "RIGHT"), Side.RIGHT);
@@ -113,7 +115,8 @@ public class ConfigManager {
 
     // Getters
     public boolean isEnabled() { return enabled; }
-    public boolean isKeepNormalChat() { return keepNormalChat; }
+    public boolean isAdminMonitorEnabled() { return adminMonitorEnabled; }
+    public String getAdminMonitorFormat() { return adminMonitorFormat; }
     public Position getPosition() { return position; }
     public Side getSide() { return side; }
     public double getHeightOffset() { return heightOffset; }
