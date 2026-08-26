@@ -50,19 +50,7 @@ public class FloatingChatManager {
 
         String wrapped = TextWrapUtil.wrap(message, configManager.getMaxCharactersPerLine(), configManager.getMaxLines());
 
-        String finalText = wrapped;
-        if (configManager.isShowPlayerName()) {
-            String namePart = configManager.colorize(configManager.getNameColor()) + player.getName() + configManager.colorize("&f") + ": ";
-            // Nama hanya ditambahkan di baris pertama
-            String[] parts = wrapped.split("\n", 2);
-            if (parts.length == 2) {
-                finalText = namePart + configManager.colorize(configManager.getMessageColor()) + parts[0] + "\n" + configManager.colorize(configManager.getMessageColor()) + parts[1];
-            } else {
-                finalText = namePart + configManager.colorize(configManager.getMessageColor()) + wrapped;
-            }
-        } else {
-            finalText = configManager.colorize(configManager.getMessageColor()) + wrapped;
-        }
+        final String finalText = buildDisplayText(player, wrapped);
 
         UUID uuid = player.getUniqueId();
 
@@ -111,6 +99,23 @@ public class FloatingChatManager {
         activeDisplays.put(uuid, display);
         startFollowTask(player, display);
         restartExpireTimer(uuid, display);
+    }
+
+    /**
+     * Menyusun teks akhir yang ditampilkan, termasuk menambahkan nama pemain
+     * (jika diaktifkan di config) hanya pada baris pertama.
+     */
+    private String buildDisplayText(Player player, String wrapped) {
+        if (!configManager.isShowPlayerName()) {
+            return configManager.colorize(configManager.getMessageColor()) + wrapped;
+        }
+
+        String namePart = configManager.colorize(configManager.getNameColor()) + player.getName() + configManager.colorize("&f") + ": ";
+        String[] parts = wrapped.split("\n", 2);
+        if (parts.length == 2) {
+            return namePart + configManager.colorize(configManager.getMessageColor()) + parts[0] + "\n" + configManager.colorize(configManager.getMessageColor()) + parts[1];
+        }
+        return namePart + configManager.colorize(configManager.getMessageColor()) + wrapped;
     }
 
     private String plainOf(TextDisplay display) {
@@ -220,4 +225,3 @@ public class FloatingChatManager {
             task.cancel();
         }
     }
-}
