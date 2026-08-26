@@ -8,17 +8,22 @@ folia-supported: false
 
 commands:
   floatingchat:
-    description: Perintah utama plugin FloatingChat
+    description: Perintah utama plugin FloatingChat (reload konfigurasi)
     usage: /floatingchat reload
     aliases: [fchat, fc]
     permission: floatingchat.admin
+  chat:
+    description: Kirim floating chat (hanya terlihat pemain di sekitar), TIDAK masuk ke chat global
+    usage: /chat <pesan>
+    aliases: [ch]
+    permission: floatingchat.use
 
 permissions:
   floatingchat.admin:
-    description: Izin untuk reload & mengatur plugin FloatingChat
+    description: Izin untuk reload & memantau (melihat) floating chat pemain lain di chat global
     default: op
   floatingchat.use:
-    description: Izin agar chat pemain ditampilkan sebagai floating chat
+    description: Izin untuk memakai perintah /chat atau /ch (mengirim floating chat)
     default: true
   floatingchat.bypasscensor:
     description: Izin agar chat pemain tidak disensor
