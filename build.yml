@@ -1,0 +1,47 @@
+name: Build FloatingChat Plugin
+
+# Workflow ini otomatis meng-compile plugin (Maven) setiap kali ada push
+# ke branch main/master, atau bisa dijalankan manual lewat tab "Actions" di GitHub.
+# Hasil file .jar bisa diunduh di tab "Actions" -> pilih run terbaru -> bagian "Artifacts".
+#
+# Jika ingin file .jar otomatis dibuat menjadi "Release" yang bisa diunduh publik,
+# cukup buat tag versi (contoh: v1.0.0) dan push tag tersebut ke GitHub.
+
+on:
+  push:
+    branches: [ "main", "master" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Build dengan Maven
+        run: mvn -B clean package
+
+      - name: Upload hasil build (.jar) sebagai Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FloatingChat-plugin
+          path: target/FloatingChat-*.jar
+
+      - name: Buat GitHub Release otomatis (hanya saat push tag v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: target/FloatingChat-*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
