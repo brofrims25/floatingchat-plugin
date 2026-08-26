@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.floatingchat</groupId>
+    <artifactId>FloatingChat</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>FloatingChat</name>
+    <description>Plugin chat melayang (floating chat) di atas/samping/depan/belakang karakter pemain, bisa dilihat pemain lain, mendukung Minecraft Java 1.21.x (Paper/Spigot) dan kompatibel dengan client Bedrock via Geyser.</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!--
+            Paper API 1.21.4 dipakai sebagai target kompilasi.
+            Plugin ini menggunakan api-version "1.21" di plugin.yml sehingga
+            tetap kompatibel dijalankan di semua versi server Paper/Spigot 1.21.x
+            (termasuk 1.21.11 dan versi 1.21 lain yang lebih baru), selama
+            server dijalankan dengan Java 17, 21, atau versi Java yang lebih baru
+            (JVM yang lebih baru selalu bisa menjalankan bytecode yang dikompilasi
+            dengan target Java 17).
+        -->
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>FloatingChat-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

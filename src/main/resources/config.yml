@@ -1,0 +1,146 @@
+# ===================================================================
+#                  FloatingChat - Konfigurasi Plugin
+# ===================================================================
+# Plugin ini menampilkan chat pemain sebagai teks melayang (floating text)
+# di dekat karakter pemain, dan bisa dilihat oleh pemain lain di sekitarnya
+# (kompatibel dengan client Java dan client Bedrock lewat Geyser).
+#
+# Setelah mengubah file ini, jalankan /floatingchat reload di server
+# (atau restart server) agar perubahan diterapkan.
+# ===================================================================
+
+# Aktif/nonaktifkan seluruh fitur floating chat.
+# Jika false, chat berjalan normal seperti biasa (tanpa teks melayang).
+enabled: true
+
+# Jika true, chat asli di kolom chat bawah (chat box) tetap ditampilkan
+# seperti biasa SELAIN muncul sebagai floating chat.
+# Jika false, chat hanya muncul melayang di dekat karakter, tidak masuk chat box.
+keep-normal-chat: true
+
+# ===================================================================
+# POSISI TAMPILAN FLOATING CHAT
+# ===================================================================
+display:
+
+  # Posisi teks relatif terhadap karakter pemain. Pilihan:
+  #   ABOVE_HEAD  -> di atas kepala pemain
+  #   FRONT       -> di depan pemain (searah hadap pemain)
+  #   BACK        -> di belakang pemain
+  #   SIDE        -> di samping pemain (kiri/kanan, lihat "side" di bawah)
+  position: ABOVE_HEAD
+
+  # Hanya dipakai jika position: SIDE
+  # Pilihan: LEFT atau RIGHT
+  side: RIGHT
+
+  # Tinggi tambahan (offset) dari posisi dasar, dalam blok.
+  # Contoh: 0.4 berarti 0.4 blok lebih tinggi dari titik acuan.
+  height-offset: 0.4
+
+  # Jarak maju/mundur untuk posisi FRONT / BACK (dalam blok).
+  front-back-distance: 0.8
+
+  # Jarak ke samping untuk posisi SIDE (dalam blok).
+  side-distance: 0.7
+
+  # Skala ukuran teks. 1.0 = ukuran normal.
+  text-scale: 1.0
+
+  # Apakah teks selalu menghadap ke pemain yang melihat (disarankan: true).
+  always-face-viewer: true
+
+  # Jarak pandang maksimal (blok) agar floating chat masih terlihat oleh pemain lain.
+  view-distance: 48
+
+  # Latar belakang di balik teks.
+  background:
+    enabled: true
+    # Format warna ARGB heksadesimal, contoh: "40000000" (hitam transparan).
+    color: "40000000"
+
+  # Tampilkan nama pemain sebagai awalan sebelum isi chat, contoh: "Steve: Halo!"
+  show-player-name: true
+  # Warna nama pemain (kode warna Minecraft, & akan otomatis dikonversi ke §).
+  name-color: "&e"
+  # Warna isi pesan chat.
+  message-color: "&f"
+
+# ===================================================================
+# DURASI TAMPIL
+# ===================================================================
+duration:
+  # Berapa lama (detik) floating chat tetap tampil sebelum otomatis hilang.
+  seconds: 6
+
+  # Jika pemain mengirim chat baru sebelum chat lama hilang,
+  # true = chat lama langsung diganti chat baru (durasi diulang dari awal)
+  # false = chat baru ditumpuk di bawah/atas chat lama sampai chat lama habis
+  replace-previous: true
+
+# ===================================================================
+# PEMBUNGKUSAN TEKS (WORD WRAP) & PERATAAN
+# ===================================================================
+text-wrap:
+  # Jumlah karakter maksimal per baris sebelum pindah ke baris baru.
+  # Jika chat lebih panjang dari ini, otomatis dipotong ke baris berikutnya
+  # (tidak akan terus memanjang ke kanan).
+  max-characters-per-line: 40
+
+  # Jumlah baris maksimal yang ditampilkan sekaligus. Sisanya akan dipotong "...".
+  max-lines: 4
+
+  # Perataan teks ketika chat panjang dan pindah baris. Pilihan:
+  #   LEFT   -> rata kiri, baris baru mulai dari kiri
+  #   CENTER -> rata tengah, baris baru mulai dari tengah
+  #   RIGHT  -> rata kanan, baris baru mulai dari kanan
+  alignment: CENTER
+
+# ===================================================================
+# FILTER / SENSOR KATA
+# ===================================================================
+censor:
+  enabled: true
+
+  # Teks pengganti untuk setiap kata yang tersensor.
+  # Gunakan "AUTO_STARS" agar jumlah bintang mengikuti panjang kata asli,
+  # atau isi teks tetap seperti "***".
+  replacement: "AUTO_STARS"
+
+  # Jika true, pencocokan kata tidak peduli besar-kecil huruf (disarankan true).
+  ignore-case: true
+
+  # Jika true, kata yang disisipi simbol/spasi (contoh: "a-n-j-i-n-g", "an j i ng")
+  # tetap akan terdeteksi dan disensor.
+  detect-bypass-tricks: true
+
+  # Daftar kata yang akan disensor. Tambah/kurangi sesuai kebutuhan server.
+  words:
+    - "anjing"
+    - "bangsat"
+    - "kontol"
+    - "memek"
+    - "goblok"
+    - "tolol"
+    - "bego"
+    - "asu"
+    - "babi"
+    - "kampret"
+
+# ===================================================================
+# KOMPATIBILITAS BEDROCK (GEYSER)
+# ===================================================================
+bedrock-compatibility:
+  # Jika server memakai Geyser/Floodgate untuk pemain Bedrock, aktifkan ini.
+  # Plugin akan menyesuaikan agar teks melayang tetap terlihat wajar di client Bedrock.
+  enabled: true
+
+# ===================================================================
+# LAIN-LAIN
+# ===================================================================
+misc:
+  # Cek update konfigurasi otomatis setiap sekian detik (0 = nonaktif).
+  auto-reload-check-seconds: 0
+
+  # Tampilkan pesan debug di console (untuk troubleshooting).
+  debug: false
