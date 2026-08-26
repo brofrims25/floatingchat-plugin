@@ -14,15 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * Membuat, memposisikan (mengikuti pemain tiap tick), dan menghapus TextDisplay
- * yang berfungsi sebagai "floating chat" di dekat karakter pemain.
- *
- * TextDisplay adalah entity bawaan Minecraft (sejak 1.19.4) yang dirender
- * untuk semua pemain di sekitarnya secara native, termasuk pemain Bedrock
- * yang terhubung lewat Geyser (karena Geyser meneruskan entity display ini
- * sebagai entity teks biasa ke client Bedrock).
- */
 public class FloatingChatManager {
 
     private final FloatingChatPlugin plugin;
@@ -39,9 +30,6 @@ public class FloatingChatManager {
         this.censorManager = censorManager;
     }
 
-    /**
-     * Menampilkan pesan chat pemain sebagai floating text di dekat karakternya.
-     */
     public void showFloatingChat(Player player, String rawMessage) {
         if (!configManager.isEnabled()) return;
 
@@ -54,7 +42,6 @@ public class FloatingChatManager {
 
         UUID uuid = player.getUniqueId();
 
-        // Jika sudah ada floating chat aktif untuk pemain ini
         TextDisplay existing = activeDisplays.get(uuid);
         if (existing != null && !existing.isDead()) {
             if (configManager.isReplacePrevious()) {
@@ -63,7 +50,6 @@ public class FloatingChatManager {
                 restartExpireTimer(uuid, existing);
                 return;
             } else {
-                // Tumpuk: gabungkan teks lama + baru (dibatasi max-lines lewat wrap ulang)
                 String combined = plainOf(existing) + "\n" + finalText;
                 existing.text(legacyToComponent(TextWrapUtil.wrap(combined, configManager.getMaxCharactersPerLine(), configManager.getMaxLines() * 2)));
                 restartExpireTimer(uuid, existing);
@@ -71,7 +57,6 @@ public class FloatingChatManager {
             }
         }
 
-        // Buat TextDisplay baru
         Location spawnLoc = calculateLocation(player);
         TextDisplay display = player.getWorld().spawn(spawnLoc, TextDisplay.class, td -> {
             td.text(legacyToComponent(finalText));
@@ -101,10 +86,6 @@ public class FloatingChatManager {
         restartExpireTimer(uuid, display);
     }
 
-    /**
-     * Menyusun teks akhir yang ditampilkan, termasuk menambahkan nama pemain
-     * (jika diaktifkan di config) hanya pada baris pertama.
-     */
     private String buildDisplayText(Player player, String wrapped) {
         if (!configManager.isShowPlayerName()) {
             return configManager.colorize(configManager.getMessageColor()) + wrapped;
@@ -139,9 +120,6 @@ public class FloatingChatManager {
         }
     }
 
-    /**
-     * Menghitung posisi tampil berdasarkan konfigurasi (ABOVE_HEAD, FRONT, BACK, SIDE).
-     */
     private Location calculateLocation(Player player) {
         Location base = player.getEyeLocation();
         Vector direction = base.getDirection().setY(0).normalize();
@@ -225,3 +203,4 @@ public class FloatingChatManager {
             task.cancel();
         }
     }
+}
