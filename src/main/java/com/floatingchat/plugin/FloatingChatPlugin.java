@@ -18,10 +18,10 @@ public class FloatingChatPlugin extends JavaPlugin {
         this.censorManager = new CensorManager(configManager);
         this.floatingChatManager = new FloatingChatManager(this, configManager, censorManager);
 
-        getServer().getPluginManager().registerEvents(
-                new ChatListener(this, configManager, floatingChatManager), this);
+        // Perintah /chat dan /ch (alias) untuk memicu floating chat (bukan chat global)
+        getCommand("chat").setExecutor(new ChatCommand(configManager, floatingChatManager));
 
-        getLogger().info("FloatingChat aktif! Chat melayang siap digunakan.");
+        getLogger().info("FloatingChat aktif! Ketik /chat <pesan> atau /ch <pesan> untuk floating chat.");
     }
 
     @Override
