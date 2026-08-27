@@ -20,6 +20,7 @@ public class ConfigManager {
     private boolean enabled;
     private boolean adminMonitorEnabled;
     private String adminMonitorFormat;
+    private boolean followModeEnabled;
 
     private Position position;
     private Side side;
@@ -55,7 +56,8 @@ public class ConfigManager {
 
         this.enabled = cfg.getBoolean("enabled", true);
         this.adminMonitorEnabled = cfg.getBoolean("admin-monitor.enabled", true);
-        this.adminMonitorFormat = cfg.getString("admin-monitor.format", "&8[&cFloatingChat&8] &e{player}&f: {message}");
+        this.adminMonitorFormat = cfg.getString("admin-monitor.format", "&8[&7FloatingChat&8] &7{player}&8: &7{message}");
+        this.followModeEnabled = cfg.getBoolean("follow-mode.enabled", true);
 
         this.position = parseEnum(Position.class, cfg.getString("display.position", "ABOVE_HEAD"), Position.ABOVE_HEAD);
         this.side = parseEnum(Side.class, cfg.getString("display.side", "RIGHT"), Side.RIGHT);
@@ -117,6 +119,7 @@ public class ConfigManager {
     public boolean isEnabled() { return enabled; }
     public boolean isAdminMonitorEnabled() { return adminMonitorEnabled; }
     public String getAdminMonitorFormat() { return adminMonitorFormat; }
+    public boolean isFollowMode() { return followModeEnabled; }
     public Position getPosition() { return position; }
     public Side getSide() { return side; }
     public double getHeightOffset() { return heightOffset; }
