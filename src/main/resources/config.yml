@@ -25,6 +25,13 @@ enabled: true
 # (terlihat oleh pemain lain yang berada dekat dengannya), dan TIDAK
 # dikirim ke chat global sama sekali.
 #
+# KHUSUS ADMIN (izin floatingchat.admin) ada 2 perintah tambahan untuk
+# memunculkan floating chat dari jarak jauh (admin TIDAK perlu berada
+# dekat dengan target):
+#   /chat <nama_pemain> <pesan>   -> muncul di dekat pemain bernama itu saja
+#   /chat all <pesan>             -> muncul di dekat SEMUA pemain sekaligus
+# (begitu juga aliasnya: /ch <nama_pemain> <pesan> dan /ch all <pesan>)
+#
 # ===================================================================
 # PEMANTAUAN OLEH ADMIN
 # ===================================================================
@@ -38,7 +45,24 @@ admin-monitor:
   enabled: true
 
   # Format pesan yang dikirim ke admin. {player} = nama pengirim, {message} = isi pesan asli (belum disensor).
-  format: "&8[&cFloatingChat&8] &e{player}&f: {message}"
+  # Sengaja dibuat abu-abu (&8/&7) dan redup supaya tidak terlalu kontras / mencolok
+  # dibanding chat global asli -- biar admin tetap bisa memantau tanpa mengganggu tampilan chat biasa.
+  format: "&8[&7FloatingChat&8] &7{player}&8: &7{message}"
+
+# ===================================================================
+# MODE MENGIKUTI PEMAIN (FOLLOW MODE)
+# ===================================================================
+follow-mode:
+  # true  -> floating chat TERUS MENGIKUTI pemain ke mana pun dia bergerak
+  #          (posisi dihitung ulang tiap tick sesuai "display.position" di atas:
+  #           atas kepala / depan / belakang / samping -- tetap menempel ke pemain).
+  #
+  # false -> floating chat "DITINGGAL" di koordinat tempat dia PERTAMA KALI muncul.
+  #          Begitu pemain pergi/bergerak, teksnya TIDAK ikut pindah -- tetap diam
+  #          di titik itu (posisi awalnya tetap dihitung sesuai "display.position",
+  #          misalnya kalau settingnya ABOVE_HEAD, teks akan diam persis di titik
+  #          atas kepala pemain SAAT chat itu dikirim) sampai durasinya habis.
+  enabled: true
 
 # ===================================================================
 # POSISI TAMPILAN FLOATING CHAT
